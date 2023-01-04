@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.bulk'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
