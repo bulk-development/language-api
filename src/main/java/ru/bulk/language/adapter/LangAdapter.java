@@ -1,4 +1,4 @@
-package ru.bulk.language;
+package ru.bulk.language.adapter;
 
 import java.util.function.Function;
 

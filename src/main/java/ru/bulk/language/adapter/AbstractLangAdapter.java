@@ -1,4 +1,4 @@
-package ru.bulk.language;
+package ru.bulk.language.adapter;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;

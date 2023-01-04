@@ -1,6 +1,8 @@
 package ru.bulk.language;
 
 import lombok.experimental.UtilityClass;
+import ru.bulk.language.adapter.LangAdapter;
+import ru.bulk.language.adapter.RepositoryLangAdapter;
 
 import java.util.function.Function;
 import java.util.function.UnaryOperator;

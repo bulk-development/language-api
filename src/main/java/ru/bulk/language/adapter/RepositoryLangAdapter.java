@@ -1,4 +1,4 @@
-package ru.bulk.language;
+package ru.bulk.language.adapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
