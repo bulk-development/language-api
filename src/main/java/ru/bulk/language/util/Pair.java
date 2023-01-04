@@ -17,6 +17,7 @@ public class Pair<K, V> {
         return pairs.stream().collect(Collectors.toMap(Pair::getKey, Pair::getValue));
     }
 
+    @SafeVarargs
     public static <K, V> Map<K, V> toMap(Pair<K, V>... pairs) {
         return toMap(Arrays.asList(pairs));
     }

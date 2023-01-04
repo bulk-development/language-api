@@ -39,7 +39,7 @@ public abstract class ContentFormat<T /*text*/, P /*parameter type*/> {
 
     protected T resolve(Object text) {
 //        if (text == null) text = "null";
-//        return text instanceofT t instanceof String ? textMapper.apply((String) text) : (T) text;
+//        return text instanceofT tп instanceof String ? textMapper.apply((String) text) : (T) text;
         return text instanceof String ? textMapper.apply((String) text) : (T) text;
     }
 
