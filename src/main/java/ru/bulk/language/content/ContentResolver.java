@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import ru.bulk.language.annotation.Content;
+import ru.bulk.language.annotation.RawContent;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -17,9 +18,18 @@ public class ContentResolver {
         Arrays.stream(preset.getClass().getDeclaredFields())
                 .filter(ContentResolver::isContentField)
                 .forEach(field -> {
-                    val contentName = resolveContentName(field);
-                    if (rawContent.get(contentName) != null)
-                        writeContentField(field, preset, textMapper, rawContent.get(contentName));
+                    if (field.isAnnotationPresent(RawContent.class)) {
+                        try {
+                            field.setAccessible(true);
+                            field.set(preset, rawContent);
+                        } catch (Throwable throwable) {
+                            throw new RuntimeException(throwable);
+                        }
+                    } else {
+                        val contentName = resolveContentName(field);
+                        if (rawContent.get(contentName) != null)
+                            writeContentField(field, preset, textMapper, rawContent.get(contentName));
+                    }
                 });
     }
 
@@ -40,7 +50,8 @@ public class ContentResolver {
     }
 
     private boolean isContentField(Field field) {
-        return ContentFormat.class.isAssignableFrom(field.getType()) && field.isAnnotationPresent(Content.class);
+        return (Map.class.isAssignableFrom(field.getType()) && field.isAnnotationPresent(RawContent.class))
+                || (ContentFormat.class.isAssignableFrom(field.getType()) && field.isAnnotationPresent(Content.class));
     }
 
     @SneakyThrows
