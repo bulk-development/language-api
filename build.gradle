@@ -41,7 +41,7 @@ publishing {
 
 jar {
     from configurations.runtimeClasspath.collect(project.&zipTree)
-    duplicatesStrategy DuplicatesStrategy.EXCLUDEg
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
 }
 
 tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
