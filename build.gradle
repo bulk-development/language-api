@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'ru.bulk'
@@ -14,6 +15,33 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'http://repo.bulk.space/private'
+            allowInsecureProtocol true
+            credentials {
+                username System.getenv('BULK_REPO_USER')
+                password System.getenv('BULK_REPO_PASSWORD')
+            }
+        }
+    }
+
+    publications {
+        version(MavenPublication) {
+            groupId group
+            artifactId 'language-api'
+            version version
+            artifact jar
+        }
+    }
+}
+
+jar {
+    from configurations.runtimeClasspath.collect(project.&zipTree)
+    duplicatesStrategy DuplicatesStrategy.EXCLUDEg
 }
 
 tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
