@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 import ru.bulk.language.annotation.Preset;
 import ru.bulk.language.content.ContentResolver;
+import ru.bulk.language.util.EnumPreset;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,19 @@ public abstract class AbstractLangAdapter<T> implements LangAdapter<T> {
             resolvePresetContents(lang.toLowerCase(), clazz.getAnnotation(Preset.class).value(), preset);
             return preset;
         });
+    }
+
+    @Override
+    public <E extends Enum<E> & EnumPreset> void resolveEnumPreset(Class<E> enumClass) {
+        if (!enumClass.isAnnotationPresent(Preset.class))
+            throw new IllegalArgumentException("Preset class mast annotated by @Preset");
+
+        for (E preset : enumClass.getEnumConstants()) {
+            presets.computeIfAbsent(preset.getLang(), __ -> new HashMap<>()).computeIfAbsent(enumClass, __ -> {
+                resolvePresetContents(preset.getLang(), enumClass.getAnnotation(Preset.class).value(), preset);
+                return preset;
+            });
+        }
     }
 
     @Override
