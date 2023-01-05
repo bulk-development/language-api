@@ -16,7 +16,7 @@ public class LangAdapterFactory {
         return new RepositoryLangAdapter<>(textMapper, account, repository, branch);
     }
 
-    public <T> LangAdapter<T> newRepositoryAdapter(Function<String, T> textMapper, String repository, String account) {
+    public <T> LangAdapter<T> newRepositoryAdapter(Function<String, T> textMapper, String account, String repository) {
         return newRepositoryAdapter(textMapper, account, repository, "master");
     }
 
